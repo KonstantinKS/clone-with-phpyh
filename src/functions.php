@@ -7,11 +7,6 @@ namespace Kenny1911\CloneWith;
 use Kenny1911\CloneWith\Exception\CloneException;
 
 /**
- * @param object $object
- * @param array<string, mixed> $properties
- *
- * @return object
- *
  * @psalm-template T
  * @psalm-param T $object
  *
