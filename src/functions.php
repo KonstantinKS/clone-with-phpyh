@@ -7,7 +7,7 @@ namespace Kenny1911\CloneWith;
 use Kenny1911\CloneWith\Exception\CloneException;
 
 /**
- * @template T
+ * @template T of object
  * @param T $object
  *
  * @return T
