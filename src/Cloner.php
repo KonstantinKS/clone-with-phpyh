@@ -51,7 +51,9 @@ final class Cloner
             $clone = $ref->newInstanceWithoutConstructor();
 
             foreach ($ref->getProperties() as $refProp) {
-                $refProp->setAccessible(true);
+                if (PHP_VERSION < 80100) {
+                    $refProp->setAccessible(true);
+                }
 
                 $value = key_exists($refProp->getName(), $properties) ? $properties[$refProp->getName()] : $refProp->getValue($this->object);
 
