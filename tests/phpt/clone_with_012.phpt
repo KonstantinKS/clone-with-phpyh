@@ -3,6 +3,8 @@ Clone with property hook updating readonly property
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 class Clazz {
 	public string $foo {
 		set {

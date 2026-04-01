@@ -3,6 +3,10 @@ Clone with respects visiblity
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use function Kenny1911\CloneWith\clone_with;
+
 class P {
 	public $a = 'default';
 	protected $b = 'default';
@@ -10,29 +14,29 @@ class P {
 	public private(set) string $d = 'default';
 
 	public function m1() {
-		return Kenny1911\CloneWith\clone_with($this, [ 'a' => 'updated A', 'b' => 'updated B', 'c' => 'updated C', 'd' => 'updated D' ]);
+		return clone_with($this, [ 'a' => 'updated A', 'b' => 'updated B', 'c' => 'updated C', 'd' => 'updated D' ]);
 	}
 }
 
 class C extends P {
 	public function m2() {
-		return Kenny1911\CloneWith\clone_with($this, [ 'a' => 'updated A', 'b' => 'updated B', 'c' => 'dynamic C' ]);
+		return clone_with($this, [ 'a' => 'updated A', 'b' => 'updated B', 'c' => 'dynamic C' ]);
 	}
 
 	public function m3() {
-		return Kenny1911\CloneWith\clone_with($this, [ 'd' => 'inaccessible' ]);
+		return clone_with($this, [ 'd' => 'inaccessible' ]);
 	}
 }
 
 class Unrelated {
 	public function m3(P $p) {
-		return Kenny1911\CloneWith\clone_with($p, [ 'b' => 'inaccessible' ]);
+		return clone_with($p, [ 'b' => 'inaccessible' ]);
 	}
 }
 
 $p = new P();
 
-var_dump(Kenny1911\CloneWith\clone_with($p, [ 'a' => 'updated A' ]));
+var_dump(clone_with($p, [ 'a' => 'updated A' ]));
 var_dump($p->m1());
 
 $c = new C();
@@ -45,13 +49,13 @@ try {
 }
 
 try {
-	var_dump(Kenny1911\CloneWith\clone_with($p, [ 'b' => 'inaccessible' ]));
+	var_dump(clone_with($p, [ 'b' => 'inaccessible' ]));
 } catch (Error $e) {
 	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
 }
 
 try {
-	var_dump(Kenny1911\CloneWith\clone_with($p, [ 'd' => 'inaccessible' ]));
+	var_dump(clone_with($p, [ 'd' => 'inaccessible' ]));
 } catch (Error $e) {
 	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
 }

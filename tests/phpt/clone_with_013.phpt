@@ -3,6 +3,8 @@ Clone with references
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 $x = new stdClass();
 
 $ref = 'reference';

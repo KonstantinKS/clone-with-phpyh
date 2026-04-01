@@ -3,6 +3,8 @@ Clone with error cases
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 $x = new stdClass();
 
 try {
@@ -13,4 +15,4 @@ try {
 
 ?>
 --EXPECT--
-TypeError: Kenny1911\CloneWith\clone_with(): Argument #2 ($withProperties) must be of type array, int given
+TypeError: Kenny1911\CloneWith\clone_with(): Argument #2 ($withProperties) must be of type array, int given, called in Standard input code on line 8

@@ -3,6 +3,10 @@ Clone with basic
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use function Kenny1911\CloneWith\clone_with;
+
 class Dummy { }
 
 $x = new stdClass();
@@ -15,12 +19,12 @@ $array = [
 ];
 
 var_dump(clone $x);
-var_dump(Kenny1911\CloneWith\clone_with($x));
-var_dump(Kenny1911\CloneWith\clone_with($x, [ 'foo' => $foo, 'bar' => $bar ]));
-var_dump(Kenny1911\CloneWith\clone_with($x, $array));
-var_dump(Kenny1911\CloneWith\clone_with($x, [ 'obj' => $x ]));
+var_dump(clone_with($x));
+var_dump(clone_with($x, [ 'foo' => $foo, 'bar' => $bar ]));
+var_dump(clone_with($x, $array));
+var_dump(clone_with($x, [ 'obj' => $x ]));
 
-var_dump(Kenny1911\CloneWith\clone_with($x, [
+var_dump(clone_with($x, [
 	'abc',
 	'def',
 	new Dummy(),

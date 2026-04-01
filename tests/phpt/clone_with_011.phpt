@@ -3,6 +3,8 @@ Clone with name mangling
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 class Foo {
 	private string $bar = 'default';
 }

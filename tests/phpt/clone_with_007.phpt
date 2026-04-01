@@ -3,6 +3,8 @@ Clone with supports __clone
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 class Clazz {
 	public function __construct(
 		public string $foo,

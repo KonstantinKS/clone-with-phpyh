@@ -3,6 +3,8 @@ Clone with native classes
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 try {
 	var_dump(Kenny1911\CloneWith\clone_with(new \Random\Engine\Secure(), [ 'with' => "something" ]));
 } catch (Throwable $e) {

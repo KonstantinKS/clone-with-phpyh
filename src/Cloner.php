@@ -51,7 +51,7 @@ final class Cloner
             $clone = $ref->newInstanceWithoutConstructor();
 
             foreach ($ref->getProperties() as $refProp) {
-                if (PHP_VERSION < 80100) {
+                if (PHP_VERSION_ID < 80100) {
                     $refProp->setAccessible(true);
                 }
 

@@ -3,6 +3,8 @@ Clone with readonly
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 readonly class Clazz {
 	public function __construct(
 		public public(set) string $a,

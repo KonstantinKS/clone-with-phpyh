@@ -2,6 +2,7 @@
 Clone with evaluation order
 --FILE--
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 class Clazz {
 	public string $hooked = 'default' {

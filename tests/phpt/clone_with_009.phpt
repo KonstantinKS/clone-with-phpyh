@@ -3,6 +3,8 @@ Clone with lazy objects
 --FILE--
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 class C {
     public $a = 1;
 
