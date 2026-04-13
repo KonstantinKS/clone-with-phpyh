@@ -1,5 +1,11 @@
 --TEST--
-Clone with respects visiblity
+Clone with respects asymmetric visiblity
+--SKIPIF--
+<?php
+
+if (PHP_VERSION_ID < 80400) {echo 'skip Aviz only since 8.4';}
+
+?>
 --FILE--
 <?php
 
@@ -11,9 +17,10 @@ class P {
 	public $a = 'default';
 	protected $b = 'default';
 	private $c = 'default';
+	public private(set) string $d = 'default';
 
 	public function m1() {
-		return clone_with($this, [ 'a' => 'updated A', 'b' => 'updated B', 'c' => 'updated C' ]);
+		return clone_with($this, [ 'a' => 'updated A', 'b' => 'updated B', 'c' => 'updated C', 'd' => 'updated D' ]);
 	}
 }
 
@@ -23,7 +30,7 @@ class C extends P {
 	}
 
 	public function m3() {
-		return clone_with($this);
+		return clone_with($this, [ 'd' => 'inaccessible' ]);
 	}
 }
 
@@ -54,7 +61,7 @@ try {
 }
 
 try {
-	var_dump(clone_with($p));
+	var_dump(clone_with($p, [ 'd' => 'inaccessible' ]));
 } catch (Error $e) {
 	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
 }
@@ -67,57 +74,51 @@ try {
 
 ?>
 --EXPECTF--
-object(P)#%d (3) {
+object(P)#%d (4) {
   ["a"]=>
   string(9) "updated A"
   ["b":protected]=>
   string(7) "default"
   ["c":"P":private]=>
   string(7) "default"
+  ["d"]=>
+  string(7) "default"
 }
-object(P)#%d (3) {
+object(P)#%d (4) {
   ["a"]=>
   string(9) "updated A"
   ["b":protected]=>
   string(9) "updated B"
   ["c":"P":private]=>
   string(9) "updated C"
+  ["d"]=>
+  string(9) "updated D"
 }
-object(C)#%d (3) {
-  ["a"]=>
-  string(9) "updated A"
-  ["b":protected]=>
-  string(9) "updated B"
-  ["c":"P":private]=>
-  string(9) "updated C"
-}
-
-Deprecated: Creation of dynamic property C::$c is deprecated in %s on line %d
 object(C)#%d (4) {
   ["a"]=>
   string(9) "updated A"
   ["b":protected]=>
   string(9) "updated B"
   ["c":"P":private]=>
+  string(9) "updated C"
+  ["d"]=>
+  string(9) "updated D"
+}
+
+Deprecated: Creation of dynamic property C::$c is deprecated in %s on line %d
+object(C)#%d (5) {
+  ["a"]=>
+  string(9) "updated A"
+  ["b":protected]=>
+  string(9) "updated B"
+  ["c":"P":private]=>
+  string(7) "default"
+  ["d"]=>
   string(7) "default"
   ["c"]=>
   string(9) "dynamic C"
 }
-object(C)#%d (3) {
-  ["a"]=>
-  string(7) "default"
-  ["b":protected]=>
-  string(7) "default"
-  ["c":"P":private]=>
-  string(7) "default"
-}
+Error: Cannot modify private(set) property P::$d from scope C
 Error: Cannot access protected property P::$b
-object(P)#%d (3) {
-  ["a"]=>
-  string(7) "default"
-  ["b":protected]=>
-  string(7) "default"
-  ["c":"P":private]=>
-  string(7) "default"
-}
+Error: Cannot modify private(set) property P::$d from global scope
 Error: Cannot access protected property P::$b
