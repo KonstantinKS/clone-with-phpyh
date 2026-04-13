@@ -16,23 +16,31 @@ use Kenny1911\CloneWith\Exception\CloneException;
  */
 function clone_with($object, array $withProperties = [])
 {
-    if (function_exists('clone')) {
-        $clone = null;
+    $clone = null;
 
-        if ($clone === null) {
-            $clone = static function($object, $withProperties) {
-                return ('clone')($object, $withProperties);
+    if ($clone === null) {
+        if (false && function_exists('clone')) {
+            $clone = static function($object, array $properties) {
+                return ('clone')($object, $properties);
+            };
+        } else {
+            $clone = static function($object, array $properties) {
+                $dummy = DummyFactory::prepare(clone $object, $properties);
+
+                foreach ($properties as $name => $value) {
+                    $dummy->{$name} = $value;
+                }
+
+                return $dummy;
             };
         }
-
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-
-        if (isset($trace[1]['class'])) {
-            return $clone->bindTo(null, $trace[1]['class'])($object, $withProperties);
-        }
-
-        return $clone($object, $withProperties);
     }
 
-    return (new Cloner($object))->cloneWith($withProperties);
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+
+    if (isset($trace[1]['class'])) {
+        return $clone->bindTo(null, $trace[1]['class'])($object, $withProperties);
+    }
+
+    return $clone($object, $withProperties);
 }
