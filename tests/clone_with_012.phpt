@@ -9,7 +9,7 @@ if (PHP_VERSION_ID < 80400) {echo 'skip';}
 --FILE--
 <?php
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use function Kenny1911\CloneWith\clone_with;
 
