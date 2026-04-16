@@ -1,5 +1,11 @@
 --TEST--
 Clone with lazy objects
+--SKIPIF--
+<?php
+
+if (PHP_VERSION_ID < 80500) {echo 'skip Clone only since 8.5';}
+
+?>
 --FILE--
 <?php
 
