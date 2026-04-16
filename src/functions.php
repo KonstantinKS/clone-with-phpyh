@@ -4,49 +4,36 @@ declare(strict_types=1);
 
 namespace Kenny1911\CloneWith;
 
-use Kenny1911\CloneWith\Exception\CloneException;
 
 /**
+ * @api
+ * 
  * @template T of object
  * @param T $object
- *
  * @return T
- *
- * @throws CloneException
  */
 function clone_with($object, array $withProperties = [])
 {
-    $clone = null;
+    static $clone = null;
 
     if ($clone === null) {
-        if (function_exists('clone')) {
-            $clone = static function($object, array $properties) {
-                return ('clone')($object, $properties);
-            };
-        } else {
-            $clone = static function($object, array $properties) {
-                static $checkRef = null;
-
-                if ($checkRef === null) {
-                    $checkRef = class_exists(\ReflectionReference::class);
+        $clone = function_exists('clone')
+            ? static function ($object, array $withProperties) {
+                return ('clone')($object, $withProperties);
+            }
+            : static function ($object, array $withProperties) {
+                if (PrototypeFactory::hasReferences($withProperties)) {
+                    throw new \Error('Cannot assign by reference when cloning with updated properties');
                 }
 
-                $dummy = DummyFactory::prepare(clone $object, $properties);
+                $prototype = PrototypeFactory::create(clone $object, $withProperties);
 
-                foreach ($properties as $name => $value) {
-                    if (
-                        $checkRef
-                        && \ReflectionReference::fromArrayElement($properties, $name) !== null
-                    ) {
-                        throw new \Error('Cannot assign by reference when cloning with updated properties');
-                    }
-
-                    $dummy->{$name} = $value;
+                foreach ($withProperties as $name => $value) {
+                    $prototype->{$name} = $value;
                 }
 
-                return $dummy;
+                return $prototype;
             };
-        }
     }
 
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
