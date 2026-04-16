@@ -5,14 +5,16 @@ Clone with native classes
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use function Kenny1911\CloneWith\clone_with;
+
 try {
-	var_dump(Kenny1911\CloneWith\clone_with(new \Random\Engine\Secure(), [ 'with' => "something" ]));
+	var_dump(clone_with(new \Random\Engine\Secure(), [ 'with' => "something" ]));
 } catch (Throwable $e) {
 	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
 }
 
 try {
-	var_dump(Kenny1911\CloneWith\clone_with(new \Random\Engine\Xoshiro256StarStar(), [ 'with' => "something" ]));
+	var_dump(clone_with(new \Random\Engine\Xoshiro256StarStar(), [ 'with' => "something" ]));
 } catch (Throwable $e) {
 	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
 }

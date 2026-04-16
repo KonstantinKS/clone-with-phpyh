@@ -11,6 +11,8 @@ if (PHP_VERSION_ID < 80500) {echo 'skip Clone only since 8.5';}
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use function Kenny1911\CloneWith\clone_with;
+
 class C {
     public $a = 1;
 
@@ -22,7 +24,7 @@ function test(string $name, object $obj) {
     printf("# %s:\n", $name);
 
     $reflector = new ReflectionClass($obj::class);
-    $clone = Kenny1911\CloneWith\clone_with($obj, [ 'a' => 2 ]);
+    $clone = clone_with($obj, [ 'a' => 2 ]);
 
     var_dump($reflector->isUninitializedLazyObject($obj));
     var_dump($obj);

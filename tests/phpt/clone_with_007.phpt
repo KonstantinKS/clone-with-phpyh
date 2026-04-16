@@ -5,6 +5,8 @@ Clone with supports __clone
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use function Kenny1911\CloneWith\clone_with;
+
 class Clazz {
 	public function __construct(
 		public string $foo,
@@ -19,7 +21,7 @@ class Clazz {
 
 $c = new Clazz('foo', 'bar');
 
-var_dump(Kenny1911\CloneWith\clone_with($c, [ 'foo' => 'foo updated in clone-with' ]));
+var_dump(clone_with($c, [ 'foo' => 'foo updated in clone-with' ]));
 
 ?>
 --EXPECTF--

@@ -11,6 +11,8 @@ if (PHP_VERSION_ID < 80400) {echo 'skip';}
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use function Kenny1911\CloneWith\clone_with;
+
 class Clazz {
 	public string $foo {
 		set {
@@ -24,10 +26,10 @@ class Clazz {
 
 $f = new Clazz();
 
-var_dump(Kenny1911\CloneWith\clone_with($f, ['foo' => 'foo updated in clone-with']));
+var_dump(clone_with($f, ['foo' => 'foo updated in clone-with']));
 
 try {
-	var_dump(Kenny1911\CloneWith\clone_with($f, ['foo' => 'foo updated in clone-with', 'bar' => 'bar updated in clone-with']));
+	var_dump(clone_with($f, ['foo' => 'foo updated in clone-with', 'bar' => 'bar updated in clone-with']));
 } catch (Throwable $e) {
 	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
 }

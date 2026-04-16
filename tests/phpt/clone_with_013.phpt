@@ -11,13 +11,15 @@ if (PHP_VERSION_ID < 70400) {echo 'skip Reference only with since 7.4';}
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use function Kenny1911\CloneWith\clone_with;
+
 $x = new stdClass();
 
 $ref = 'reference';
 $with = ['x' => &$ref];
 
 try {
-	var_dump(Kenny1911\CloneWith\clone_with($x, $with));
+	var_dump(clone_with($x, $with));
 } catch (Throwable $e) {
 	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
 }
@@ -25,7 +27,7 @@ try {
 unset($ref);
 
 try {
-	var_dump(Kenny1911\CloneWith\clone_with($x, $with));
+	var_dump(clone_with($x, $with));
 } catch (Throwable $e) {
 	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
 }

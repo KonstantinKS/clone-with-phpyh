@@ -5,12 +5,14 @@ Clone with name mangling
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use function Kenny1911\CloneWith\clone_with;
+
 class Foo {
 	private string $bar = 'default';
 }
 
 try {
-	var_dump(Kenny1911\CloneWith\clone_with(new Foo(), ["\0Foo\0bar" => 'updated']));
+	var_dump(clone_with(new Foo(), ["\0Foo\0bar" => 'updated']));
 } catch (Throwable $e) {
 	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
 }
