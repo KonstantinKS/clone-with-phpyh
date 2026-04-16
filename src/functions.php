@@ -19,15 +19,28 @@ function clone_with($object, array $withProperties = [])
     $clone = null;
 
     if ($clone === null) {
-        if (false && function_exists('clone')) {
+        if (function_exists('clone')) {
             $clone = static function($object, array $properties) {
                 return ('clone')($object, $properties);
             };
         } else {
             $clone = static function($object, array $properties) {
+                static $checkRef = null;
+
+                if ($checkRef === null) {
+                    $checkRef = class_exists(\ReflectionReference::class);
+                }
+
                 $dummy = DummyFactory::prepare(clone $object, $properties);
 
                 foreach ($properties as $name => $value) {
+                    if (
+                        $checkRef
+                        && \ReflectionReference::fromArrayElement($properties, $name) !== null
+                    ) {
+                        throw new \Error('Cannot assign by reference when cloning with updated properties');
+                    }
+
                     $dummy->{$name} = $value;
                 }
 
