@@ -16,14 +16,16 @@ final class DummyFactory
     {
         $reflObject = new \ReflectionObject($clonedPrototype);
 
-        $dummy = $reflObject->newInstanceWithoutConstructor();
+        $dummy = $reflObject->isInternal()
+            ? $clonedPrototype
+            : $reflObject->newInstanceWithoutConstructor();
 
         foreach ($reflObject->getProperties() as $reflProperty) {
             if (array_key_exists($reflProperty->name, $exceptProperties)) {
                 continue;
             }
 
-            if ($reflProperty->getDeclaringClass() !== $dummy::class) {
+            if ($reflProperty->getDeclaringClass()->name !== $dummy::class) {
                 continue;
             }
 
@@ -34,7 +36,7 @@ final class DummyFactory
 
         while (false !== $parent = $parent->getParentClass()) {
             foreach ($parent->getProperties(\ReflectionProperty::IS_PRIVATE) as $reflProperty) {
-                if ($reflProperty->getDeclaringClass() !== $parent->name) {
+                if ($reflProperty->getDeclaringClass()->name !== $parent->name) {
                     continue;
                 }
 
@@ -56,12 +58,18 @@ final class DummyFactory
             return;
         }
 
-        // if (PHP_VERSION_ID >= 70400 && !$property->isInitialized($prototype)) {
-        //     return;
-        // }
+        if (PHP_VERSION_ID >= 70400 && !$property->isInitialized($prototype)) {
+            return;
+        }
 
         if (PHP_VERSION_ID >= 80400) {
             if ($property->isVirtual()) {
+                return;
+            }
+
+            if ($property->isLazy($prototype)) {
+                $property->getRawValue($target);
+
                 return;
             }
             
