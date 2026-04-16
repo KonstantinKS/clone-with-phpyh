@@ -1,5 +1,11 @@
 --TEST--
 Clone with error handling
+--SKIPIF--
+<?php
+
+if (PHP_VERSION_ID < 80400) {echo 'skip';}
+
+?>
 --FILE--
 <?php
 

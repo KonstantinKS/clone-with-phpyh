@@ -1,5 +1,11 @@
 --TEST--
 Clone with references
+--SKIPIF--
+<?php
+
+if (PHP_VERSION_ID < 70400) {echo 'skip Reference only with since 7.4';}
+
+?>
 --FILE--
 <?php
 
