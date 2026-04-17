@@ -31,7 +31,7 @@ final class PrototypeFactory
                 continue;
             }
 
-            if ($reflProperty->getDeclaringClass()->name !== $prototype::class) {//} get_class($prototype)) {
+            if ($reflProperty->getDeclaringClass()->name !== get_class($prototype)) {
                 continue;
             }
 

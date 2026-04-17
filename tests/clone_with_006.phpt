@@ -12,9 +12,9 @@ $x = new stdClass();
 try {
 	var_dump(clone_with($x, 1));
 } catch (Throwable $e) {
-	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
+	echo get_class($e), ": ", $e->getMessage(), PHP_EOL;
 }
 
 ?>
 --EXPECTF--
-TypeError: Kenny1911\CloneWith\clone_with(): Argument #2 ($withProperties) must be of type array, int given, called in Standard input code on line %d
+TypeError:%stype array, %s given, called in %s on line %d

@@ -1,5 +1,11 @@
 --TEST--
 Clone with respects asymmetric visiblity (replace aviz)
+--SKIPIF--
+<?php
+
+if (PHP_VERSION_ID < 70400) {echo 'skip';}
+
+?>
 --FILE--
 <?php
 

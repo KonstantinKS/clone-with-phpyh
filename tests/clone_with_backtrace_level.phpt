@@ -9,9 +9,7 @@ use function Kenny1911\CloneWith\clone_with;
 
 final class X
 {
-  public function __construct(
-    private string $x = 'y',
-  ) {}
+  private $x = 'y';
 
   public function clone() {
     return clone_with($this);

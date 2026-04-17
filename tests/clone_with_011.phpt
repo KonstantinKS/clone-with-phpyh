@@ -1,5 +1,11 @@
 --TEST--
 Clone with name mangling
+--SKIPIF--
+<?php
+
+if (PHP_VERSION_ID < 70400) {echo 'skip';}
+
+?>
 --FILE--
 <?php
 
