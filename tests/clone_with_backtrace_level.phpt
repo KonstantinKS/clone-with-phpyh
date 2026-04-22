@@ -1,5 +1,11 @@
 --TEST--
 Clone with respects visiblity
+--SKIPIF--
+<?php
+
+if (PHP_VERSION_ID >= 80000 && PHP_VERSION_ID < 80100) {echo 'skip';}
+
+?>
 --FILE--
 <?php
 
