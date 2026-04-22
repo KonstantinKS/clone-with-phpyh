@@ -3,7 +3,7 @@ Clone with respects visiblity (no aviz)
 --SKIPIF--
 <?php
 
-if (PHP_VERSION_ID < 80100) {echo 'skip';}
+if (PHP_VERSION_ID < 80200) {echo 'skip';}
 
 ?>
 --FILE--
