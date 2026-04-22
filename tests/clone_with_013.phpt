@@ -21,7 +21,7 @@ $with = ['x' => &$ref];
 try {
 	var_dump(clone_with($x, $with));
 } catch (Throwable $e) {
-	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
+	echo get_class($e), ": ", $e->getMessage(), PHP_EOL;
 }
 
 unset($ref);
@@ -29,7 +29,7 @@ unset($ref);
 try {
 	var_dump(clone_with($x, $with));
 } catch (Throwable $e) {
-	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
+	echo get_class($e), ": ", $e->getMessage(), PHP_EOL;
 }
 
 ?>

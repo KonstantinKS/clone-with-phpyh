@@ -3,7 +3,7 @@ Clone with supports __clone
 --SKIPIF--
 <?php
 
-if (PHP_VERSION_ID < 70400) {echo 'skip';}
+if (PHP_VERSION_ID < 80000) {echo 'skip';}
 
 ?>
 --FILE--
