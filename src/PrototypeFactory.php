@@ -85,6 +85,10 @@ final class PrototypeFactory
             return;
         }
 
+        if (PHP_VERSION_ID < 80100) {
+            $property->setAccessible(true);
+        }
+
         if (PHP_VERSION_ID >= 70400 && !$property->isInitialized($object)) {
             return;
         }
@@ -103,10 +107,6 @@ final class PrototypeFactory
             $property->setRawValue($prototype, $property->getRawValue($object));
 
             return;
-        }
-
-        if (PHP_VERSION_ID < 80100) {
-            $property->setAccessible(true);
         }
 
         $property->setValue($prototype, $property->getValue($object));
