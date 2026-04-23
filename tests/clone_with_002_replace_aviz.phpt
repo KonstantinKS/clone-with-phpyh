@@ -3,7 +3,7 @@ Clone with respects asymmetric visiblity (replace aviz)
 --SKIPIF--
 <?php
 
-if (PHP_VERSION_ID < 80200) {echo 'skip';}
+if (PHP_VERSION_ID < 70400) {echo 'skip';}
 
 ?>
 --FILE--
@@ -24,6 +24,7 @@ class P {
 	}
 }
 
+#[AllowDynamicProperties]
 class C extends P {
 	public function m2() {
 		return clone_with($this, [ 'a' => 'updated A', 'b' => 'updated B', 'c' => 'dynamic C' ]);
@@ -51,25 +52,25 @@ var_dump($c->m2());
 try {
 	var_dump($c->m3());
 } catch (Error $e) {
-	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
+	echo get_class($e), ": ", $e->getMessage(), PHP_EOL;
 }
 
 try {
 	var_dump(clone_with($p, [ 'b' => 'inaccessible' ]));
 } catch (Error $e) {
-	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
+	echo get_class($e), ": ", $e->getMessage(), PHP_EOL;
 }
 
 try {
 	var_dump(clone_with($p, [ 'd' => 'inaccessible' ]));
 } catch (Error $e) {
-	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
+	echo get_class($e), ": ", $e->getMessage(), PHP_EOL;
 }
 
 try {
 	var_dump((new Unrelated())->m3($p));
 } catch (Error $e) {
-	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
+	echo get_class($e), ": ", $e->getMessage(), PHP_EOL;
 }
 
 ?>
@@ -104,8 +105,6 @@ object(C)#%d (4) {
   ["d":"P":private]=>
   string(9) "updated D"
 }
-
-Deprecated: Creation of dynamic property C::$c is deprecated in %s on line %d
 object(C)#%d (5) {
   ["a"]=>
   string(9) "updated A"
@@ -118,8 +117,6 @@ object(C)#%d (5) {
   ["c"]=>
   string(9) "dynamic C"
 }
-
-Deprecated: Creation of dynamic property C::$d is deprecated in %s on line %d
 object(C)#%d (5) {
   ["a"]=>
   string(7) "default"

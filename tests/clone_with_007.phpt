@@ -3,7 +3,7 @@ Clone with supports __clone
 --SKIPIF--
 <?php
 
-if (PHP_VERSION_ID < 80000) {echo 'skip';}
+if (PHP_VERSION_ID < 70400) {echo 'skip';}
 
 ?>
 --FILE--
@@ -14,10 +14,16 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use function Kenny1911\CloneWith\clone_with;
 
 class Clazz {
+	public $foo;
+	public $bar;
+
 	public function __construct(
-		public string $foo,
-		public string $bar,
-	) { }
+		string $foo,
+		string $bar
+	) {
+		$this->foo = $foo;
+		$this->bar = $bar;
+	}
 
 	public function __clone() {
 		$this->foo = 'foo updated in __clone';

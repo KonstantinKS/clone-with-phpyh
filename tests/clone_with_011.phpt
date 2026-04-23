@@ -3,7 +3,7 @@ Clone with name mangling
 --SKIPIF--
 <?php
 
-if (PHP_VERSION_ID < 80100) {echo 'skip';}
+if (PHP_VERSION_ID < 70400) {echo 'skip';}
 
 ?>
 --FILE--
@@ -20,9 +20,9 @@ class Foo {
 try {
 	var_dump(clone_with(new Foo(), ["\0Foo\0bar" => 'updated']));
 } catch (Throwable $e) {
-	echo $e::class, ": ", $e->getMessage(), PHP_EOL;
+	echo get_class($e), ": ", $e->getMessage(), PHP_EOL;
 }
 
 ?>
---EXPECT--
-Error: Cannot access property starting with "\0"
+--EXPECTREGEX--
+Error: Cannot access property start(ing|ed) with ('|")\\0('|")
